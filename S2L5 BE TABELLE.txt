@@ -1,0 +1,53 @@
+Tabella ANAGRAFICA
+CREATE TABLE ANAGRAFICA (
+    idanagrafica INT PRIMARY KEY,
+    Cognome VARCHAR(50),
+    Nome VARCHAR(50),
+    Indirizzo VARCHAR(100),
+    Città VARCHAR(50),
+    CAP VARCHAR(10),
+    Cod_Fisc VARCHAR(16)
+);
+
+Tabella TIPO_VIOLAZIONE
+CREATE TABLE TIPO_VIOLAZIONE (
+    idviolazione INT PRIMARY KEY,
+    descrizione VARCHAR(100)
+);
+
+Tabella VERBALE
+CREATE TABLE VERBALE (
+    idverbale INT PRIMARY KEY,
+    DataViolazione DATE,
+    IndirizzoViolazione VARCHAR(100),
+    Nominativo_Agente VARCHAR(100),
+    DataTrascrizioneVerbale DATE,
+    Importo DECIMAL(10, 2),
+    DecurtamentoPunti INT,
+    idanagrafica INT,
+    idviolazione INT,
+    FOREIGN KEY (idanagrafica) REFERENCES ANAGRAFICA(idanagrafica),
+    FOREIGN KEY (idviolazione) REFERENCES TIPO_VIOLAZIONE(idviolazione)
+);
+
+Popolamento delle tabelle
+
+ANAGRAFICA
+INSERT INTO ANAGRAFICA (idanagrafica, Cognome, Nome, Indirizzo, Città, CAP, Cod_Fisc)
+VALUES 
+    (1, 'Rossi', 'Mario', 'Via Roma, 10', 'Roma', '00100', 'RSSMRA80A01'),
+    (2, 'Bianchi', 'Laura', 'Corso Italia, 15', 'Milano', '20100', 'BNLRLA75B02'),
+    (3, 'Verdi', 'Giuseppe', 'Piazza Garibaldi', 'Napoli', '80100', 'VRDGPP60A03');
+
+TIPO_VIOLAZIONE
+INSERT INTO TIPO_VIOLAZIONE (idviolazione, descrizione)
+VALUES 
+    (1, 'Eccesso di velocità'),
+    (2, 'Sosta vietata'),
+    (3, 'Guida senza cintura di sicurezza');
+
+VERBALE
+INSERT INTO VERBALE (idverbale, DataViolazione, IndirizzoViolazione, Nominativo_Agente, DataTrascrizioneVerbale, Importo, DecurtamentoPunti, idanagrafica, idviolazione)
+VALUES
+    (1, '2024-02-05', 'Via Roma, 10', 'Marco Rossi', '2024-02-06', 50.00, 2, 1, 1),
+    (2, '2024-01-28', 'Corso Italia, 15', 'Giulia Bianchi', NULL, 0.00, 0, 2, 2);
